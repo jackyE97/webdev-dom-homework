@@ -1,5 +1,5 @@
-<script>
-  "use strict";
+import { getApi } from "./api.js";
+
   const buttonElement = document.getElementById("add-button");
   const listElement = document.getElementById("list");
   const nameInputElement = document.getElementById("name-input");
@@ -31,16 +31,7 @@
   //API асинхронные запросы
   loaderEl.innerHTML = "Комментарии загружаются..."
   function getComments() {
-    return fetch(
-      'https://wedev-api.sky.pro/api/v1/jacqueline-eller/comments',
-      {
-        method: "GET",
-      }).then((response) => {
-        if (response.status === 500) {
-          throw new Error("Сервер упал");
-        }
-        return response.json();
-      })
+    getApi()
       .then((resData) => {
         const appComments = resData.comments.map((commentator) => {
           return {
@@ -268,5 +259,3 @@
 
   initEventListeners();
   renderCommentators();
-
-</script>
