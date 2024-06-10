@@ -1,12 +1,12 @@
-import { answerComment, initEventListeners } from "./listeners.js";
+import { handleAnswerComment, handleLikeButtons } from "./listeners.js";
 import { commentators } from "./main.js";
 
 
 export const renderCommentators = () => {
-    const listElement = document.getElementById("list");
-    const commentatorsHtml = commentators
-      .map((commentator, index) => {
-        return `<li class="comment" data-index="${index}" data-name="${commentator.name}">
+  const listElement = document.getElementById("list");
+  const commentatorsHtml = commentators
+    .map((commentator, index) => {
+      return `<li class="comment" data-index="${index}" data-name="${commentator.name}">
         <div class="comment-header">
           <div>${commentator.name}</div>
           <div>${commentator.time}</div>
@@ -21,12 +21,11 @@ export const renderCommentators = () => {
           </div>
         </div>
       </li>`;
-      })
-      .join("");
+    })
+    .join("");
 
-    listElement.innerHTML = commentatorsHtml;
+  listElement.innerHTML = commentatorsHtml;
 
-
-    answerComment();
-    initEventListeners();
-  };
+  handleAnswerComment();
+  handleLikeButtons();
+};
