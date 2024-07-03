@@ -135,3 +135,20 @@ body {
   .add-form-button:hover {
     opacity: 0.9;
   }
+
+  .add-form-link {
+    margin-top: 44px;
+    color: rgb(243, 224, 224);
+    text-decoration: underline;
+  }
+
+  .add-form-button:hover,
+  .add-form-link:hover {
+    opacity: 0.9;
+  }
+
+  .link {
+    align-items: center;
+  }
+
+  

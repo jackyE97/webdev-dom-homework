@@ -43,6 +43,10 @@ export const handleAnswerComment = () => {
 export const handleLikeButtons = () => {
   for (const likeButton of document.querySelectorAll('.like-button')) {
     likeButton.addEventListener("click", (event) => {
+      if(!token) {
+        alert("Нужно авторизироваться")
+        return
+      }
       event.stopPropagation();
       const index = likeButton.dataset.index;
       const commentator = commentators[index];
