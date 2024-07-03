@@ -1,5 +1,6 @@
-import { init } from "./listeners.js";
-import { loginButtonListerner } from "./loginPage.js";
+import { init, listElement } from "./listeners.js";
+import { appElement, loginButtonListerner } from "./loginPage.js";
+import { renderCommentators } from "./render.js";
 
 
 export let commentators = [];
@@ -17,7 +18,7 @@ const loginLinkElement = document.querySelector('.login-link');
       appElement.classList.add('add-form');
       document.querySelector('.link').style.display = 'none';
       renderLogin();
-      fetchAndRenderComments();
+      renderCommentators();
       window.scrollTo({
         top:document.querySelector('.form'),
       });
