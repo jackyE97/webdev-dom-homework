@@ -1,6 +1,6 @@
 
-import { regUser, token } from "./api.js"
-import { renderLoginPage } from "./loginPage.js"
+import { token } from "./api.js"
+import { renderLogin } from "./loginPage.js"
 
 
 
@@ -12,20 +12,19 @@ import { renderLoginPage } from "./loginPage.js"
   <div class="form">
     <h3 class="form-title">Форма регистрации</h3>
     <div class="form-row">
-    <input type="text" id="name-reg-input" class="input" placeholder="Ваше имя" />
-    <input type="text" id="login-reg-input" class="input" placeholder="Придумайте логин" />
+    <input type="text" id="name-reg-input" class="input" placeholder="Введите ваше имя" />
+    <input type="text" id="login-reg-input" class="input" placeholder="Введите логин" />
       <input
         type="text"
         id="password-reg-input"
         class="input"
-        placeholder="Придумайте пароль"
+        placeholder="Введите пароль"
       />
-      <button class="button-reg-reg">Зарегестрироваться</button>
+      <button class="button-reg-user">Зарегистрироваться</button>
     </div>
     <br />
-  </div>
-  
-  `
+  </div>`
+
   appRendering.innerHTML = regHtml
 
 
@@ -33,18 +32,18 @@ import { renderLoginPage } from "./loginPage.js"
     const loginRegInput =document.getElementById("login-reg-input")
     const passwordRegInput =document.getElementById("password-reg-input")
 
-    const regNewButtonOnRegPage = document.querySelector(".button-reg-reg")
-        regNewButtonOnRegPage.addEventListener("click",()=>{
+    const regUserBtn = document.querySelector(".button-reg-user")
+        regUserBtn.addEventListener("click",()=>{
             if(loginRegInput.value==="" || nameRegInput.value==="" || passwordRegInput.value=== ""){
-                alert("Введите данные")
+                alert("Заполните все поля!")
                 return
             }
-            regUser (
+            regNewUser (
                 loginRegInput.value,
                 nameRegInput.value,
                 passwordRegInput.value
             ).then(()=>{
-                renderLoginPage()
+                renderLogin()
             })
     })
  }

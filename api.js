@@ -6,17 +6,20 @@ const tokenUrl= "https://wedev-api.sky.pro/api/user/login";
 export let token;
 export const setToken = (newToken) => {
   token = newToken;
-}
+};
 
 export function getApi() {
   let status = 0;
 
   return fetch(host, {
     method: "GET",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
   })
     .then((response) => {
       if(response.status === 401) {
-        throw new Error("Нет авторизации");
+        throw new Error("Вы не зарегистрированы");
       }
       // status = response.status;
       
@@ -44,7 +47,7 @@ export function postApi(name, text) {
   return fetch(host, {
     method: "POST",
     headers: {
-      Authorization: `Bearer ${token}`
+      Authorization: `Bearer ${token}`,
     },
     body: JSON.stringify({
       name: name,
@@ -83,5 +86,7 @@ export function login({ login, password }) {
       login,
       password,
     }),
+    }).then((response) => {
+      return response.json();
   });
-};
+}

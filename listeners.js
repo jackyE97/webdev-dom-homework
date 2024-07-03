@@ -1,3 +1,5 @@
+import { token } from "./api.js";
+import { renderLogin } from "./loginPage.js";
 import { commentators } from "./main.js";
 import { renderCommentators } from "./render.js";
 import { getComments, sendComment } from "./requests.js";
@@ -13,11 +15,34 @@ export const loaderMessageEl = document.getElementById('loader-message');
 export const addForm = document.getElementById("add-form");
 
 export const init = () => {
-  loaderEl.innerHTML = "Комментарии загружаются..."
-
+  const appHtml = document.getElementById("app")
+  // loaderEl.innerHTML = "Комментарии загружаются..."
+const navLoginBtn = `
+<div class = "add-form-link login-link">
+<p class ='link'>Чтобы добавить комментарий, <a id="login-link">авторизуйтесь</a></p> 
+</div>`
+  const formHtml = `
+  <div class="add-form">
+  <input id="name-input" type="text" class="add-form-name" placeholder="Введите ваше имя" />
+  <textarea id="comment-input" type="textarea" class="add-form-text" placeholder="Введите ваш коментарий"
+    rows="4"></textarea>
+  <div class="add-form-row">
+    <button id="add-button" class="add-form-button">Написать</button>
+  </div>
+</div>`
+  const mainPage = `
+     <div id="loader"></div>
+  <ul id="list" class="comments">
+  </ul>
+  <form id="myForm">
+    <div id="loader-message"></div>
+    ${token ? formHtml : navLoginBtn}
+  </form>`
+appHtml.innerHTML = mainPage;
   getComments();
 
   handleFormActions();
+  formAction();
 }
 
 //ответы на комменты
@@ -62,6 +87,9 @@ export const handleLikeButtons = () => {
 
 const handleFormActions = () => {
   // очистка формы после отправки комментария
+  if (!token) {
+    return
+  }
   const form = document.getElementById('myForm');
 
   form.addEventListener('submit', (e) => {
@@ -94,4 +122,18 @@ const handleFormActions = () => {
 
     sendComment(name, comment)
   });
+}
+
+
+
+export function formAction () {
+  if (token) {
+    return
+  }
+  const loginLinkElement = document.querySelector('.login-link');
+
+    loginLinkElement.addEventListener('click', () => {
+      renderLogin();
+    });
+
 }

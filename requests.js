@@ -21,7 +21,7 @@ export function getComments() {
 
       setCommentators(appComments);
       renderCommentators();
-      loaderEl.textContent = "";
+      // loaderEl.textContent = "";
     })
 }
 

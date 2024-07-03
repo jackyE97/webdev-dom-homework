@@ -1,10 +1,11 @@
 import { login, setToken, token } from "./api.js";
-import { renderForm } from "./renderForm.js";
+import { regNewUser } from "./reg.js";
+import { renderCommentators } from "./render.js";
 import { getComments } from "./requests.js";
 
-export const appElement = document.querySelector('.app');
 
 export const renderLogin = () => {
+  const appHtml = document.getElementById("app")
     const loginHTML = `
       <h3 class="form-title">Форма входа</h3>
       <div class="form-row">
@@ -17,41 +18,39 @@ export const renderLogin = () => {
       </div>
       <br />
       <button class="button login-button">Войти</button>
+      <a href="index.html" id="link-to-tasks">Главная страница</a>
+      <button class="button reg-button">Регистрация</button>
     </div>`
-    appElement.innerHTML = loginHTML;
+    appHtml.innerHTML = loginHTML;
+    loginButtonListerner();
+    regButtonListener();
 };
 
 
 export function loginButtonListerner () {
   const loginButtonElement = document.querySelector('.login-button');
   const loginInputElement = document.querySelector('.login-input');
-  const passworInputElement = document.querySelector('.password-input');
+  const passwordInputElement = document.querySelector('.password-input');
 
   loginButtonElement.addEventListener('click', () => {
       login({ 
           login: loginInputElement.value,
-          password: passworInputElement.value,
-      }).then((response) => {
-        if(response.status === 400) {
-          alert('Неверные логин или пароль');
-          throw new Error('Ошибка 400');
-        }else {  
-            listElement.style.display = 'flex';
-            appElement.style.display = 'none';
-            renderForm();     
-            return response.json();
-        };
+          password: passwordInputElement.value,
       }).then((responseData) => {
-          const inputElement = document.querySelector ('.add-form-name');
-          inputElement.value = responseData.user.name;
-          inputElement.setAttribute("readonly", "readonly");
           setToken(responseData.user.token);
-          return token;
-      }).then(() => {
-        return getComments();
-      });
-  });
+          console.log(token);
+  }).then (() => {
+    renderCommentators();
+  })
+});
 };
+
+function regButtonListener () {
+  const regBtn = document.querySelector(".reg-button")
+  regBtn.addEventListener("click", () => {
+    regNewUser();
+  } )
+}
 
 
 
