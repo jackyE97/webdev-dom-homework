@@ -1,5 +1,5 @@
 import { token } from "./api.js";
-import { renderLogin } from "./loginPage.js";
+import { renderLoginForm } from "./loginPage.js";
 import { commentators } from "./main.js";
 import { renderCommentators } from "./render.js";
 import { getComments, sendComment } from "./requests.js";
@@ -133,7 +133,7 @@ export function formAction () {
   const loginLinkElement = document.querySelector('.login-link');
 
     loginLinkElement.addEventListener('click', () => {
-      renderLogin();
+    renderLoginForm();
     });
 
 }
