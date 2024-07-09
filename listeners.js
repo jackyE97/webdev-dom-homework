@@ -1,5 +1,5 @@
 import { token } from "./api.js";
-import { renderLogin } from "./loginPage.js";
+import { renderLogin } from "./renderLoginPage.js";
 import { commentators } from "./main.js";
 import { renderCommentators } from "./render.js";
 import { getComments, sendComment } from "./requests.js";

@@ -1,7 +1,8 @@
 
 const url = "https://wedev-api.sky.pro/api/v1/jacqueline-eller/comments";
 const host = "https://wedev-api.sky.pro/api/v2/jacqueline-eller/comments";
-const tokenUrl= "https://wedev-api.sky.pro/api/user/login";
+const urlLogin= "https://wedev-api.sky.pro/api/user/login";
+const urlUser = "https://wedev-api.sky.pro/api/user";
 
 export let token;
 export const setToken = (newToken) => {
@@ -77,16 +78,61 @@ export function postApi(name, text) {
 }
 
 
-//registration
-
-export function login({ login, password }) {
-  return fetch(tokenUrl, {
+// функция обращения к серверу для авторизации 
+export async function login({ login, password }) {
+  return fetch(urlLogin, {
     method: "POST",
     body: JSON.stringify({
       login,
       password,
     }),
-    }).then((response) => {
-      return response.json();
-  });
-}
+  })
+    .then((response) => {
+      if (response.status === 201) {
+        console.log("комменты отрисовались?");
+        return response.json();
+      }
+      if (response.status === 400) {
+        throw new Error("неправильный логин или пароль 400");
+      }
+      if (response.status === 500) {
+        return Promise.reject("ошибка сервера");
+      }
+      return Promise.reject("Отсутствует соединение");
+    })
+    .catch((error) => {
+      alert(error);
+      console.warn(error);
+    });
+};
+
+//   функция обращения к серверу для регистрации 
+export async function  register({ name, login, password }) {
+  console.log(name, login, password);
+  return fetch(urlUser, {
+    method: "POST",
+    body: JSON.stringify({
+      name,
+      login,
+      password,
+    }),
+  })
+    .then((response) => {
+      // console.log(response);
+      if (response.status === 201) {
+        console.log("авторизация?");
+        return response.json();
+      }
+      if (response.status === 400) {
+        throw new Error("пользователь с таким логином уже сущетсвует 400");
+      }
+      if (response.status === 500) {
+        return Promise.reject("ошибка сервера");
+      }
+      return Promise.reject("Отсутствует соединение");
+    })
+    .catch((error) => {
+      alert(error);
+      console.warn(error);
+    });
+};
