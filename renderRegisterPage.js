@@ -27,7 +27,7 @@ export const renderRegister = () => {
   </div>`;
   registerAppHtml.innerHTML = registerHtml;
 
-  const buttonLoginElement = document.getElementById("login-form-button");
+  const loginButtonElement= document.getElementById("login-form-button");
   const registerButtonElement = document.getElementById("register-button");
 
 
@@ -57,7 +57,7 @@ export const renderRegister = () => {
           });
   });
 
-  buttonLoginElement.addEventListener("click", () => {
+  loginButtonElement.addEventListener("click", () => {
 
       renderLogin()
   });

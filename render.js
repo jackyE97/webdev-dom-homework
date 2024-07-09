@@ -1,5 +1,6 @@
 import { handleAnswerComment, handleLikeButtons } from "./listeners.js";
 import { commentators } from "./main.js";
+import { renderLogin } from "./renderLoginPage.js";
 
 
 export const renderCommentators = () => {
@@ -34,6 +35,38 @@ export const renderCommentators = () => {
 
   listElement.innerHTML = commentatorsHtml;
 
-  handleAnswerComment();
-  handleLikeButtons();
+
+//Переход к форме авторизации по клику
+const setLoginBtn = () => {
+  const loginButtonElement = document.getElementById("render-login-btn");
+  if (!loginButtonElement) {
+    return;
+  }
+  loginButtonElement.addEventListener("click", (event) => {
+    event.preventDefault();
+    renderLogin();
+  });
 };
+
+if (token) {
+  // exit();
+   
+handleLikeButtons(); // Функция Лайков
+
+handleAnswerComment(); // Функция ответа на комментарии
+ 
+}else {
+  setLoginBtn();
+}
+};
+
+
+// // функция выхода авторизованного пользователя
+// function exit() {
+//   const exitButton = document.getElementById("exit-button");
+//   exitButton?.addEventListener("click", () => {
+//     localStorage.removeItem("token");
+//     localStorage.removeItem("user");
+//     renderLogin();
+//   });
+// };

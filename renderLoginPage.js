@@ -1,6 +1,7 @@
 import {  login, setToken  } from "./api.js";
 import { renderRegister} from "./renderRegisterPage.js";
 import { getComments } from "./requests.js";
+import { setUser } from "./main.js";
 
 
 export const renderLogin = () => {
@@ -26,17 +27,18 @@ export const renderLogin = () => {
         </div>
         <button id="login-form-button" class="add-form-button">Войти</button>
         <button  id="register-button" class="render-register-button">Зарегистрироваться</button>
+        <a hre  id="main-page" class="main-page">На главную</a>
       </div>
     </div>`;
   appHtml.innerHTML = loginHtml;
 
   //Добавляем действие по клику на "авторизация"
-  const buttonLoginElement = document.getElementById("login-form-button");
+  const loginButtonElement = document.getElementById("login-form-button");
   const loginInputElement = document.getElementById("login-input");
   const passwordInputElement = document.getElementById("password-input");
   const registerButtonElement = document.getElementById("register-button");
 
-  buttonLoginElement.addEventListener("click", (event) => {
+  loginButtonElement.addEventListener("click", (event) => {
       event.preventDefault();
       if (loginInputElement.value.trim() === "" || passwordInputElement.value.trim() === "") {
           alert("Проверьте оба поля  на заполненность");

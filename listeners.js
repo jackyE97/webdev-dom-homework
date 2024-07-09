@@ -23,7 +23,7 @@ const navLoginBtn = `
 </div>`
   const formHtml = `
   <div class="add-form">
-  <input id="name-input" type="text" class="add-form-name" placeholder="Введите ваше имя" />
+  <input id="name-input" value="" type="text" class="add-form-name" placeholder="Введите ваше имя" />
   <textarea id="comment-input" type="textarea" class="add-form-text" placeholder="Введите ваш коментарий"
     rows="4"></textarea>
   <div class="add-form-row">
@@ -97,6 +97,7 @@ const handleFormActions = () => {
     e.target.reset();
   });
 
+  
   //ОБРАБОТЧИК КНОПКИ НАПИСАТЬ КОММЕНТАРИЙ//
   buttonElement.addEventListener("click", () => {
     nameInputElement.classList.remove("error");
