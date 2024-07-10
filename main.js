@@ -1,14 +1,27 @@
-import { init } from "./listeners.js";
+
+import { getComments } from "./request.js";
+
 
 export let user = JSON.parse(localStorage.getItem("user"));
 export const setUser = (newUser) => {
   user = newUser;
 };
 
-export let commentators = [];
+// Выводим новый комментарий из сервера на страницу
+getComments(); 
 
-export function setCommentators(data) {
-  commentators = data;
-}
 
-init();
+// import { init } from "./listeners.js";
+
+// export let user = JSON.parse(localStorage.getItem("user"));
+// export const setUser = (newUser) => {
+//   user = newUser;
+// };
+
+// export let commentators = [];
+
+// export function setCommentators(data) {
+//   commentators = data;
+// }
+
+// init();
