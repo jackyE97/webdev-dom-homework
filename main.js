@@ -1,10 +1,14 @@
-import { init } from "./listeners.js";
+
+import { getComments } from "./request.js";
 
 
-export let commentators = [];
+export let user = JSON.parse(localStorage.getItem("user"));
+export const setUser = (newUser) => {
+  user = newUser;
+};
 
-export function setCommentators(data) {
-  commentators = data;
-}
 
-init();
+// Выводим новый комментарий из сервера на нашу страницу
+getComments(); 
+
+
