@@ -31,12 +31,12 @@ export const renderLoginForm = () => {
     appHtml.innerHTML = loginHtml;
 
     //Добавляем действие по клику на "авторизация"
-    const buttonLoginElement = document.getElementById("login-form-button");
+    const loginButtonElement = document.getElementById("login-form-button");
     const loginInputElement = document.getElementById("login-input");
     const passwordInputElement = document.getElementById("password-input");
     const registerButtonElement = document.getElementById("register-button");
 
-    buttonLoginElement.addEventListener("click", (event) => {
+    loginButtonElement.addEventListener("click", (event) => {
         event.preventDefault();
         if (loginInputElement.value.trim() === "" || passwordInputElement.value.trim() === "") {
             alert("Проверьте оба поля  на заполненность");

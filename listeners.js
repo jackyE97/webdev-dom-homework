@@ -3,7 +3,6 @@ import { renderComments, saveFormData, onRender } from "./render.js";
 import { token } from "./api.js";
 
 
-
 export const replyComments = () => {
     
     const answerComments = document.querySelectorAll(".comment");

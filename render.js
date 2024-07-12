@@ -58,11 +58,11 @@ export function renderComments() {
   
 //Переход к форме авторизации по клику
 const setLoginBtn = () => {
-  const buttonLoginElement = document.getElementById("render-login-btn");
-  if (!buttonLoginElement) {
+  const loginButtonElement = document.getElementById("render-login-btn");
+  if (!loginButtonElement) {
     return;
   }
-  buttonLoginElement.addEventListener("click", (event) => {
+  loginButtonElement.addEventListener("click", (event) => {
     event.preventDefault();
     renderLoginForm();
   });

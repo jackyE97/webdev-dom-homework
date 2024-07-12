@@ -12,10 +12,9 @@ export async function getComments() {
         .then((responseData) => {
             loaderElement.remove(); //Удаляем лоадер после загрузки данных
             const appComments = responseData.comments.map((comment) => {
-                const createDate = new Date(comment.date);
                 return {
                     name: comment.author.name,
-                    time: createDate,
+                    time: new Date(comment.date).toLocaleString(),
                     review: comment.text,
                     likeCount: comment.likes,
                     isLiked: false
