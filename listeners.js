@@ -1,5 +1,6 @@
-import { database } from "./request.js";
+import { database } from "./requests.js";
 import { renderComments, saveFormData, onRender } from "./render.js";
+import { token } from "./api.js";
 
 
 
@@ -37,11 +38,9 @@ export function handleLikeButtons() {
                 database[index].isLiked = !database[index].isLiked
                 database[index].likeCount++
             };
-            saveFormData(); // сохранения данных при отправке формы
-            renderComments();
+            saveFormData(); // Сохранения данных при отправке формы
+            renderComments(); //Комменты
             onRender();  // После рендер заполняем форму данными из localStorag
-
         });
-
     };
 };

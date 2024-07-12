@@ -1,6 +1,6 @@
-import { loginPost, setToken  } from "./api.js";
+import { login, setToken  } from "./api.js";
 import { setUser } from "./main.js";
-import { getComments } from "./request.js";
+import { getComments } from "./requests.js";
 import { renderRegisterForm } from "./renderRegisterForm.js";
 
 export const renderLoginForm = () => {
@@ -42,7 +42,7 @@ export const renderLoginForm = () => {
             alert("Проверьте оба поля  на заполненность");
             return;
         }
-        loginPost({
+        login({
             login: loginInputElement.value,
             password: passwordInputElement.value,
         })

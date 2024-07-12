@@ -1,9 +1,8 @@
-
-export let listElement = document.getElementById('list');
 export const baseURL = new URL("https://wedev-api.sky.pro/api/v2/:jacqueline-eller/comments");
 export const urlApiLogin = new URL("https://wedev-api.sky.pro/api/user/login")
 export const urlApiuser = new URL("https://wedev-api.sky.pro/api/user");
 
+export let listElement = document.getElementById('list');
 
 
 export let token = localStorage.getItem("token");
@@ -65,7 +64,7 @@ export async function apiPostComments(nameInputElement, reviewInputElement) {
         });
 };
 
-// Функция обращения к серверу для авторизации 
+// ункция обращения к серверу для авторизации 
 export async function  login({ login, password }) {
     return fetch(urlApiLogin, {
       method: "POST",
@@ -76,14 +75,13 @@ export async function  login({ login, password }) {
     })
       .then((response) => {
         if (response.status === 201) {
-          console.log("комменты отрисовались?");
           return response.json();
         }
         if (response.status === 400) {
-          throw new Error("неправильный логин или пароль 400");
+          throw new Error("Неправильный логин или пароль");
         }
         if (response.status === 500) {
-          return Promise.reject("ошибка сервера");
+          return Promise.reject("Ошибка сервера");
         }
         return Promise.reject("Отсутствует соединение");
       })

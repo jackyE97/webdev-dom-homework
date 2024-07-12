@@ -1,5 +1,4 @@
-
-import { getComments } from "./request.js";
+import { getComments } from "./requests.js";
 
 
 export let user = JSON.parse(localStorage.getItem("user"));

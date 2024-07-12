@@ -2,7 +2,6 @@ import { setToken, } from "./api.js";
 import { setUser } from "./main.js";
 import { renderLoginForm, } from "./renderLoginForm.js";
 import { register } from "./api.js";
-import { safeMode, successfully } from "./helpers.js";
 
 
 // Рендер функция страницы регистрации 
@@ -41,16 +40,15 @@ export const renderRegisterForm = () => {
 
         }
         register({ //Функция регистрации пользователя
-            name: safeMode(nameInnputElement.value.trim()),
-            login: safeMode(loginInputElement.value.trim()),
-            password: safeMode(passwordInputElement.value.trim()),
+            name: nameInnputElement.value.trim(),
+            login: loginInputElement.value.trim(),
+            password: passwordInputElement.value.trim(),
         })
             .then((responseData) => {
                 setUser(responseData.user.name);
                 setToken(responseData.user.setToken);
                 console.log(responseData.user.name);
                 console.log(setToken);
-                successfully();  // Функция уведомления пользователя 
                 renderLoginForm();  // Переход на страницы авторизации 
 
             });

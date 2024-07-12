@@ -1,10 +1,8 @@
-import { renderComments,  } from "./render.js";
-import { apiGetComments, apiPostComments } from "./api.js";
-import { format } from "date-fns";
+import { renderComments } from "./render.js";
+import { apiGetComments, apiPostComments, token } from "./api.js";
+
 
 const loaderElement = document.getElementById('preloader')
-
-
 
 export let database = [];
 
@@ -14,7 +12,7 @@ export async function getComments() {
         .then((responseData) => {
             loaderElement.remove(); //Удаляем лоадер после загрузки данных
             const appComments = responseData.comments.map((comment) => {
-                const createDate = format(new Date(comment.date), 'yyyy-MM-dd hh.mm.ss');
+                const createDate = new Date(comment.date);
                 return {
                     name: comment.author.name,
                     time: createDate,
@@ -25,14 +23,21 @@ export async function getComments() {
             });
             database = appComments;
             renderComments();
-            
-
         })
         .catch((error) => {
-           
+            if (token) {
+                const publishButton = document.getElementById("add-form-button");
+                publishButton.disabled = false;
+                publishButton.textContent = "Написать";
+            }
+            if (error.message === "Сервер упал") {
+                alert("Кажется, что-то пошло не так, попробуй позже");
+
+            } if (error.message === 'Failed to fetch') {
+                alert("Кажется,сломался интернет, попробуй позже");
+            }
             // Отправлять в систему сбора ошибок
             console.warn(error);
-
         });
 };
 
@@ -65,7 +70,6 @@ export const postComments = () => {
             } if (error.message === 'Failed to fetch') {
                 alert("Кажется,сломался интернет, попробуй позже");
             }
-            // TODO: Отправлять в систему сбора ошибок
             console.warn(error);
 
         });
