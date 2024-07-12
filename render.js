@@ -1,39 +1,74 @@
-import { handleAnswerComment, handleLikeButtons } from "./listeners.js";
-import { commentators } from "./main.js";
+import { handleLikeButtons, replyComments } from "./listeners.js";
+import { database, publish,  } from "./request.js";
+import { listElement } from "./api.js";
 
 
-export const renderCommentators = () => {
-  const listElement = document.getElementById("list");
-  const commentatorsHtml = commentators
-    .map((commentator, index) => {
-      return `<li class="comment" data-index="${index}" data-name="${commentator.name}">
-        <div class="comment-header">
-          <div>${commentator.name.replaceAll("&", "&amp;")
-          .replaceAll("<", "&lt;")
-          .replaceAll(">", "&gt;")
-          .replaceAll('"', "&quot;")}</div>
-          <div>${commentator.time}</div>
-        </div>
-        <div class="comment-body">
-          <div class="comment-text">${commentator.comment.replaceAll("&", "&amp;")
-          .replaceAll("<", "&lt;")
-          .replaceAll(">", "&gt;")
-          .replaceAll('"', "&quot;")
-          .replaceAll('QUOTE_BEGIN', "<div class='quote'>")
-          .replaceAll('QUOTE_END', "</div>")}
-        </div>
-        <div class="comment-footer">
-          <div class="likes">
-            <span class="likes-counter">${commentator.like}</span>
-            <button data-like="${index}" data-index="${index}" class="like-button ${commentator.isLiked ? '-active-like' : ''}"></button>
+
+export function renderComments() {
+  const appHtml = document.getElementById("app");
+  listElement.innerHTML = database.map((comment, index) => {
+    const classButton = comment.isLiked ? "-active-like" : ""
+    return `<li class="comment" data-index="${index}">
+          <div class="comment-header">
+            <div>${comment.name}</div>
+            <div>${comment.time}</div>
           </div>
-        </div>
-      </li>`;
-    })
-    .join("");
+          <div class="comment-body">
+            <div class="comment-text" data-index="${index}" >
+              ${comment.review}
+            </div>
+          </div>
+          <div class="comment-footer">
+            <div class="likes">
+              <span class="likes-counter" data-index="${index}">${comment.likeCount}</span>
+              <button class="like-button ${classButton}" data-index="${index}"></button>
+            </div>
+          </div>
+        </li>`
 
-  listElement.innerHTML = commentatorsHtml;
+  }).join("");
 
-  handleAnswerComment();
-  handleLikeButtons();
+
+  appHtml.innerHTML = contentHtml();
+
+  
+//Переход к форме авторизации по клику
+const setLoginButton = () => {
+  const buttonLoginElement = document.getElementById("render-login-btn");
+  if (!buttonLoginElement) {
+    return;
+  }
+  buttonLoginElement.addEventListener("click", (event) => {
+    event.preventDefault();
+    renderLoginForm();
+  });
 };
+
+
+// Функция выхода для авторизованного пользователя
+function exit() {
+  const exitButton = document.getElementById("exit-button");
+  exitButton?.addEventListener("click", () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+    renderLoginForm();
+  });
+};
+
+
+// Функция сохранения данных 
+export function saveFormData() { 
+  
+const textArea = document.getElementById("text-input");
+
+  localStorage.setItem("comment", textArea.value);
+};
+
+
+ export function onRender() {
+  const textArea = document.getElementById("text-input");
+  if (localStorage.getItem("comment")) {
+    textArea.value = localStorage.getItem("comment");
+  }
+};
+}

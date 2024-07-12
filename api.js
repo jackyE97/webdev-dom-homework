@@ -1,60 +1,50 @@
 
-const url = "https://wedev-api.sky.pro/api/v1/jacqueline-eller/comments";
+export let listElement = document.getElementById('list');
+export const baseURL = new URL("https://wedev-api.sky.pro/api/v2/:jacqueline-eller/comments");
 
-export function getApi() {
-  let status = 0;
 
-  return fetch(url)
-    .then((response) => {
-      status = response.status;
-      
-      return response.json();
+
+// Функция обращения к серверу для загрузки комментария
+export async function apiGetComments() {
+    return fetch(baseURL, {
+        method: "GET",
+    }).then((response) => {
+        if (response.status === 401) {
+          throw new Error("Вы не авторизованы");
+        }
+                if (response.status === 200) {
+            return response.json();
+        }
+
+        if (response.status === 500) {
+            throw new Error("Сервер упал");
+        }
+
+      })  
+};
+
+
+// Функция обращения к серверу для публикации поста
+export async function apiPostComments(nameInputElement, reviewInputElement) {
+   return fetch(baseURL, {
+        method: "POST",
+        body: JSON.stringify({
+            text: reviewInputElement.value,
+            name: nameInputElement.value,
+            forceError: true
+
+        }),
     })
-    .then((data) => {
-      if (status >= 400)
-        throw new Error(data.error);
-
-      return data;
-    })
-    .catch((error) => {
-      if (error === "Failed to fetch")
-        alert("Проблемы с Интернетом, проверьте соединение");
-      else
-        alert(error.message);
-
-      return "error";
-    })
-}
-
-export function postApi(name, text) {
-  let status = 0;
-
-  return fetch(url, {
-    method: "POST",
-    body: JSON.stringify({
-      name: name,
-      text: text,
-      // forceError: true,
-    }),
-  })
-    .then((response) => {
-      status = response.status;
-      
-      return response.json();
-    })
-    .then((data) => {
-      if (status >= 400)
-        throw new Error(data.error);
-
-      return data;
-    })
-    .catch((error) => {
-      if (error === "Failed to fetch")
-        alert("Проблемы с Интернетом, проверьте соединение");
-      else
-        alert(error.message);
-
-      return "error";
-    })
-}
-
+        .then((response) => {
+            console.log(response);
+            if (response.status === 201) {
+                return response.json();
+            }
+            if (response.status === 400) {
+                throw new Error("Неверный запрос");
+            }
+            if (response.status === 500) {
+                throw new Error("Сервер упал");
+            }
+        });
+};
