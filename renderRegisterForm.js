@@ -50,12 +50,10 @@ export const renderRegisterForm = () => {
                 console.log(responseData.user.name);
                 console.log(setToken);
                 renderLoginForm();  // Переход на страницы авторизации 
-
             });
     });
 
     loginButtonElement.addEventListener("click", () => {
-
         renderLoginForm()
     });
 };

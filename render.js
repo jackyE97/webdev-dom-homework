@@ -33,11 +33,13 @@ export function renderComments() {
 
   //Форма ввода комментария
   const contentHtml = () => {
-    
-    const btnLogin = `
-    <p  >  Чтобы добавить комментарий, 
-    <a id="render-login-btn" class="authorization">авторизуйтесь</a> </p>`;
 
+   //авторизация
+    const btnLogin = ` 
+    <p >  Чтобы добавить комментарий, 
+    <a id="render-login-btn" class="authorization">авторизируйтесь</a></p>`;
+
+//если авторизирован возможность добавить комментарий
     if (!token)
       return `<ul id="list" class="comments">${listElement.innerHTML}</ul>
      ${btnLogin}`;
@@ -70,9 +72,9 @@ const setLoginBtn = () => {
 
 if (token) {
   exit();
-  handleLikeButtons();    // Функция Лайков
-  replyComments();         // Функция ответа на комментарии
-  publish();           // Функция публикация постов
+  handleLikeButtons(); // Функция Лайков
+  replyComments(); // Функция ответа на комментарии
+  publish(); // Функция публикация постов
  }else {
   setLoginBtn();
 }

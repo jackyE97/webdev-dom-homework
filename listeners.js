@@ -39,7 +39,7 @@ export function handleLikeButtons() {
             };
             saveFormData(); // Сохранения данных при отправке формы
             renderComments(); //Комменты
-            onRender();  // После рендер заполняем форму данными из localStorag
+            onRender();  // После рендер заполняем форму данными из localStorage
         });
     };
 };

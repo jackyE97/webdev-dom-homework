@@ -126,6 +126,7 @@ body {
     margin-top: 24px;
     font-size: 24px;
     padding: 10px 20px;
+    margin-right: 10px;
     background-color: #bcec30;
     border: none;
     border-radius: 18px;
@@ -177,7 +178,6 @@ body {
   border: none;
   display: flex;
     justify-content: space-around;
-  
   cursor: pointer;
 text-decoration: underline;
 
@@ -226,50 +226,56 @@ text-decoration: underline;
   transition: 0.5s;
 }
  
-  /* Добавляение лоадера  */
-  .preloader {
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    width: 100%;
-    height: 100%;
-    background-color: #202020;
-    opacity: 0;
-    transform: translate(-50%, -50%);
 
-  }
-
-@keyframes ldio-x2uulkbinbj {
-  0% { transform: translate(-50%,-50%) rotate(0deg); }
-  100% { transform: translate(-50%,-50%) rotate(360deg); }
+.authorization {
+  cursor: pointer;
+  text-decoration: underline;
 }
-.ldio-x2uulkbinbj div {
+
+/* Лоадер  */
+.preloader {
   position: absolute;
-  width: 116px;
-  height: 116px;
-  border: 20px solid #3d278a;
-  border-top-color: transparent;
-  border-radius: 50%;
-}
-.ldio-x2uulkbinbj div {
-  animation: ldio-x2uulkbinbj 1s linear infinite;
-  top: 100px;
-  left: 100px
-}
-.loadingio-spinner-rolling-nq4q5u6dq7r {
-  width: 200px;
-  height: 200px;
-  display: inline-block;
-  overflow: hidden;
-  
-  
-}
-.ldio-x2uulkbinbj {
+  left: 50%;
+  top: 50%;
   width: 100%;
   height: 100%;
-  position: relative;
-  transform: translateZ(0) scale(1);
-  backface-visibility: hidden;
-  transform-origin: 0 0; 
+  background-color: #202020;
+  opacity: 0;
+  transform: translate(-50%, -50%);
+
+}
+
+@keyframes ldio-x2uulkbinbj {
+0% { transform: translate(-50%,-50%) rotate(0deg); }
+100% { transform: translate(-50%,-50%) rotate(360deg); }
+}
+.ldio-x2uulkbinbj div {
+position: absolute;
+width: 116px;
+height: 116px;
+border: 20px solid #3d278a;
+border-top-color: transparent;
+border-radius: 50%;
+}
+.ldio-x2uulkbinbj div {
+animation: ldio-x2uulkbinbj 1s linear infinite;
+top: 100px;
+left: 100px
+}
+.loadingio-spinner-rolling-nq4q5u6dq7r {
+width: 200px;
+height: 200px;
+display: inline-block;
+overflow: hidden;
+
+
+}
+.ldio-x2uulkbinbj {
+width: 100%;
+height: 100%;
+position: relative;
+transform: translateZ(0) scale(1);
+backface-visibility: hidden;
+transform-origin: 0 0; 
 }
 .ldio-x2uulkbinbj div { box-sizing: content-box; }
