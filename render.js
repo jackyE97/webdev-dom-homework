@@ -1,6 +1,8 @@
 import { handleLikeButtons, replyComments } from "./listeners.js";
-import { database, publish,  } from "./request.js";
-import { listElement } from "./api.js";
+import { database, publish,  } from "./requests.js";
+import { listElement, token, getToken } from "./api.js";
+import { user  } from "./main.js";
+import { renderLoginForm } from "./renderLoginForm.js";
 
 
 
@@ -29,19 +31,53 @@ export function renderComments() {
   }).join("");
 
 
-  appHtml.innerHTML = contentHtml();
+  //Форма ввода комментария
+  const contentHtml = () => {
 
+   //авторизация
+    const btnLogin = ` 
+    <p >  Чтобы добавить комментарий, 
+    <a id="render-login-btn" class="authorization">авторизируйтесь</a></p>`;
+
+//если авторизирован возможность добавить комментарий
+    if (!token)
+      return `<ul id="list" class="comments">${listElement.innerHTML}</ul>
+     ${btnLogin}`;
+    return `<ul id="list" class="comments">${listElement.innerHTML}</ul>
+    <div id="add-form" class="add-form">
+      <input id="name-input" value="${user.name}"  readonly type="text" class="add-form-name" placeholder="Введите ваше имя" />
+      <textarea id="text-input" type="textArea" class="add-form-text" placeholder="Введите ваш коментарий"
+        rows="4"></textarea>
+      <div class="add-form-row">
+        <button id="exit-button" class="add-form-button">Выйти</button>
+        <button id="add-form-button" class="add-form-button">Написать</button>
+        </div>
+    </div>
+    `;
+  };
+
+  appHtml.innerHTML = contentHtml();
   
 //Переход к форме авторизации по клику
-const setLoginButton = () => {
-  const buttonLoginElement = document.getElementById("render-login-btn");
-  if (!buttonLoginElement) {
+const setLoginBtn = () => {
+  const loginButtonElement = document.getElementById("render-login-btn");
+  if (!loginButtonElement) {
     return;
   }
-  buttonLoginElement.addEventListener("click", (event) => {
+  loginButtonElement.addEventListener("click", (event) => {
     event.preventDefault();
     renderLoginForm();
   });
+};
+
+if (token) {
+  exit();
+  handleLikeButtons(); // Функция Лайков
+  replyComments(); // Функция ответа на комментарии
+  publish(); // Функция публикация постов
+ }else {
+  setLoginBtn();
+}
 };
 
 
@@ -71,4 +107,3 @@ const textArea = document.getElementById("text-input");
     textArea.value = localStorage.getItem("comment");
   }
 };
-}

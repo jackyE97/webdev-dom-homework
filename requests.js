@@ -1,10 +1,8 @@
-import { renderComments,  } from "./render.js";
-import { apiGetComments, apiPostComments } from "./api.js";
-import { format } from "date-fns";
+import { renderComments } from "./render.js";
+import { apiGetComments, apiPostComments, token } from "./api.js";
+
 
 const loaderElement = document.getElementById('preloader')
-
-
 
 export let database = [];
 
@@ -14,10 +12,9 @@ export async function getComments() {
         .then((responseData) => {
             loaderElement.remove(); //Удаляем лоадер после загрузки данных
             const appComments = responseData.comments.map((comment) => {
-                const createDate = format(new Date(comment.date), 'yyyy-MM-dd hh.mm.ss');
                 return {
                     name: comment.author.name,
-                    time: createDate,
+                    time: new Date(comment.date).toLocaleString(),
                     review: comment.text,
                     likeCount: comment.likes,
                     isLiked: false
@@ -25,17 +22,23 @@ export async function getComments() {
             });
             database = appComments;
             renderComments();
-            
-
         })
         .catch((error) => {
-           
+            if (token) {
+                const publishButton = document.getElementById("add-form-button");
+                publishButton.disabled = false;
+                publishButton.textContent = "Написать";
+            }
+            if (error.message === "Сервер упал") {
+                alert("Кажется, что-то пошло не так, попробуй позже");
+
+            } if (error.message === 'Failed to fetch') {
+                alert("Кажется,сломался интернет, попробуй позже");
+            }
             // Отправлять в систему сбора ошибок
             console.warn(error);
-
         });
 };
-
 
 //Функция запроса с использованием функ апи и с обработкой ошибок для публикации  
 export const postComments = () => {
@@ -66,12 +69,10 @@ export const postComments = () => {
             } if (error.message === 'Failed to fetch') {
                 alert("Кажется,сломался интернет, попробуй позже");
             }
-            // TODO: Отправлять в систему сбора ошибок
             console.warn(error);
 
         });
 };
-
 
 export function publish() {
     const publishButton = document.getElementById("add-form-button");
@@ -100,51 +101,3 @@ export function publish() {
 
     });
 };
-
-// import { getApi, postApi } from "./api.js";
-// import { buttonElement, commentInputElement, loaderEl, loaderMessageEl, nameInputElement } from "./listeners.js";
-// import { setCommentators } from "./main.js";
-// import { renderCommentators } from "./render.js";
-
-// export function getComments() {
-//   getApi()
-//     .then((data) => {
-//       if (data === "error")
-//         return;
-
-//       const appComments = data.comments.map((commentator) => {
-//         return {
-//           name: commentator.author.name,
-//           time: new Date(commentator.date).toLocaleString(),
-//           comment: commentator.text,
-//           like: commentator.likes,
-//           isLiked: commentator.isLiked,
-//         };
-//       });
-
-//       setCommentators(appComments);
-//       renderCommentators();
-//       loaderEl.textContent = "";
-//     })
-// }
-
-// export function sendComment(name, comment) {
-//   postApi(name, comment)
-//     .then((data) => {
-//       if (data === "error") {
-//         nameInputElement.value = name;
-//         commentInputElement.value = comment;
-//         return;
-//       }
-
-//       nameInputElement.value = "";
-//       commentInputElement.value = "";
-
-//       getComments()
-//     })
-//     .finally(() => {
-//       loaderMessageEl.textContent = "";
-//       buttonElement.disabled = false;
-//       buttonElement.textContent = 'Написать';
-//     })
-// }
